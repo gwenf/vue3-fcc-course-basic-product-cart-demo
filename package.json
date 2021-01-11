@@ -1,0 +1,24 @@
+{
+  "name": "product-and-cart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run sass\" \"npm run serve\"",
+    "serve": "live-server --open=/src/app.html --ignore=.git,node_modules",
+    "sass": "node-sass -i -w --output-style=compressed src/styles/style.scss src/styles/style.min.css",
+    "lint": "node-sass -i --output-style=compressed src/styles/style.scss src/styles/style.min.css && npm run sasslint",
+    "sasslint": "sass-lint -c .sass-lint.yml -v -f table"
+  },
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "live-server": "^1.2.1",
+    "node-sass": "^4.13.1",
+    "normalize.css": "^8.0.1",
+    "sass-lint": "^1.13.1",
+    "tjw-sasslint-rules": "^2.1.0"
+  },
+  "keywords": [],
+  "author": "TheJaredWilcurt/Gwendolyn Faraday",
+  "license": "MIT"
+}

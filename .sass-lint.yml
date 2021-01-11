@@ -1,0 +1,4 @@
+options:
+  config-file: node_modules/tjw-sasslint-rules/tjwsasslint.yml
+files:
+  include: 'src/styles/**/*.s+(a|c)ss'

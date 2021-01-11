@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Modak';
+    font-style: normal;
+    font-weight: normal;
+    // sass-lint:disable no-duplicate-properties indentation
+    src: url('./fonts/modak.eot');
+    src: url('./fonts/modak.eot?#iefix') format('embedded-opentype'),
+         url('./fonts/modak.woff') format('woff'),
+         url('./fonts/modak.ttf') format('truetype'),
+         url('./fonts/modak.svg#modakregular') format('svg');
+    // sass-lint:enable no-duplicate-properties indentation
+}

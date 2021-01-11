@@ -1,0 +1,55 @@
+.recommended,
+.card-container
+    display: flex
+    justify-content: space-between
+
+.card-container
+    flex-wrap: wrap
+
+.card
+    display: inline-block
+    width: 300px
+    background: $cardBackground
+    margin-bottom: 20px
+    color: $cardTextColor
+    &:hover i
+        opacity: 1.0
+
+.card-title
+    +truncate
+    width: 100%
+    background: $cardHeaderBackground
+    padding: 10px
+    font-size: 22px
+
+.card-body
+    border: 1px solid $cardBorder
+    border-top: 0px
+    border-bottom: 0px
+    text-align: center
+    i
+        display: block
+        color: var(--bodyTextColor)
+        opacity: 0.8
+    label
+        display: inline-block
+        font-weight: bold
+        &:first-of-type
+            margin-top: 0px
+    input
+        width: 100px
+        border: 1px solid $cardBorder
+        padding: 4px
+    .cell
+        align-items: center
+        width: 50%
+        min-height: 2em
+        padding: 3px 4px
+        &:first-of-type
+            justify-content: end
+
+.card-footer
+    background: $footerBackground
+    margin-top: 15px
+    padding: 10px
+    text-align: right

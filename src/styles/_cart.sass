@@ -1,0 +1,57 @@
+.cart-container
+    position: fixed
+    overflow: hidden
+
+.cart-container,
+.cart
+    top: 0px
+    right: 0px
+    width: $cartWidth
+    height: 100%
+
+.cart
+    position: relative
+    background: $cartBackground
+    color: $topNavColor
+    transition: 1s ease right
+    &.hide
+        right: $cartWidth * -1
+
+.cart-title
+    align-items: center
+    min-height: $navBarHeight
+    max-height: $navBarHeight
+    background: $cartTitleBackground
+    border-bottom: 1px solid $topNavColor
+    padding: 0px 15px
+    font-size: 26px
+
+.cart-close
+    background: transparent
+    border: 0px
+    border-radius: $buttonRadius
+    padding: 0px 13px
+    color: $bodyBackground
+    font-size: $fontSize * 2
+    font-weight: bold
+    &:hover
+        background: $cartBackground
+
+.cart-table
+    width: $cartWidth - ($cartTableMargin * 3)
+    border-collapse: collapse
+    margin: 0px
+    font-size: $fontSize - 3px
+
+.cart-image
+    max-width: 45px
+    max-height: 45px
+
+.cart-body
+    max-height: calc(100% - #{$navBarHeight})
+    padding: $cartTableMargin
+    overflow: auto
+
+.cart-remove
+    padding: 0px 7px
+    font-size: $fontSize * 1.25

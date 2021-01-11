@@ -1,0 +1,47 @@
+.top-bar
+    background: $topNavBackground
+    color: $topNavColor
+    font-size: 0px
+
+.top-bar-nav
+    display: inline-block
+
+.top-bar-link,
+.top-bar-cart-link
+    span
+        display: inline-block
+        border-right: 1px solid $topNavColor
+        padding: 15px 19px
+        color: $topNavColor
+        font-size: $fontSize
+        text-decoration: none
+
+.top-bar-link
+    display: inline-block
+    text-decoration: none
+    i
+        margin-left: 10px
+        color: $topNavColor
+        font-size: 40px
+        text-decoration: none
+        vertical-align: -8px
+    &:first-of-type span
+        padding-left: 10px
+    &:hover
+        background: $topBarLinkHoverBackground
+
+.top-bar-cart-link
+    text-decoration: none
+    cursor: default
+    span
+        border: 0px
+        font-size: $fontSize
+    &:hover span
+        text-decoration: underline
+    i,
+    &:hover i
+        margin-right: -7px
+        color: $topNavColor
+        font-size: 31px
+        text-decoration: none
+        vertical-align: -4px
