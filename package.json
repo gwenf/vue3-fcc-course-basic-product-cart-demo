@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run sass\" \"npm run serve\"",
+    "start": "concurrently 'npm run sass' 'npm run serve'",
     "serve": "live-server --open=/src/app.html --ignore=.git,node_modules",
     "sass": "node-sass -i -w --output-style=compressed src/styles/style.scss src/styles/style.min.css",
     "lint": "node-sass -i --output-style=compressed src/styles/style.scss src/styles/style.min.css && npm run sasslint",
