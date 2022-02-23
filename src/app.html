@@ -24,7 +24,7 @@
             <span>Past Orders</span>
           </a>
         </nav>
-        <a href="#" class="top-bar-cart-link">
+        <a class="top-bar-cart-link" v-on:click="toggleSidebar">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart (0)</span>
         </a>
@@ -159,14 +159,12 @@
         </div>
 
       </main>
-
+      <side-bar v-if="isVisible" v-bind:toggle="toggleSidebar" />
       <footer>
       </footer>
-
+      
     </div>
     
-    <script>
-
-    </script>
+    <script src="./app.js"></script>
   </body>
 </html>
