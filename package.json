@@ -13,12 +13,22 @@
   "devDependencies": {
     "concurrently": "^5.1.0",
     "live-server": "^1.2.1",
-    "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
     "sass-lint": "^1.13.1",
     "tjw-sasslint-rules": "^2.1.0"
   },
   "keywords": [],
   "author": "TheJaredWilcurt/Gwendolyn Faraday",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canalog/vue-product-cart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/canalog/vue-product-cart/issues"
+  },
+  "homepage": "https://github.com/canalog/vue-product-cart#readme",
+  "dependencies": {
+    "node-sass": "^6.0.1"
+  }
 }
