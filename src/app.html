@@ -2,14 +2,12 @@
 <html>
   <head>
     <title>Splendid Food</title>
-    <link rel="stylesheet" href="styles/style.min.css">
-    <link rel="icon" href="../public/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="../public/favicon.ico" type="image/ico">
+    <link rel="stylesheet" href="styles/style.min.css" />
+    <link rel="icon" href="../public/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="../public/favicon.ico" type="image/ico" />
   </head>
   <body>
-
     <div id="app">
-
       <header class="top-bar spread">
         <nav class="top-bar-nav">
           <a href="#" class="top-bar-link">
@@ -23,7 +21,7 @@
             <span>Past Orders</span>
           </a>
         </nav>
-        <a href="#" class="top-bar-cart-link">
+        <a @click="toggleSidebar" class="top-bar-cart-link">
           <i class="icofont-cart-alt icofont-1x"></i>
           <span>Cart (0)</span>
         </a>
@@ -36,15 +34,11 @@
       </div>
 
       <main class="wrapper">
-
         <h2>Recommended</h2>
 
         <div class="recommended">
-
           <div class="card">
-            <div class="card-title">
-              Carrots
-            </div>
+            <div class="card-title">Carrots</div>
             <div class="card-body">
               <i class="icofont-10x icofont-carrot"></i>
               <form>
@@ -60,16 +54,14 @@
                   <div class="cell">
                     <label>Price:</label>
                   </div>
-                  <div class="cell">
-                    $4.82
-                  </div>
+                  <div class="cell">$4.82</div>
                 </div>
                 <div class="row">
                   <div class="cell">
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model.number="inventory.carrots">
+                    <input type="number" v-model.number="inventory.carrots" />
                   </div>
                 </div>
               </form>
@@ -82,9 +74,7 @@
           </div>
 
           <div class="card">
-            <div class="card-title">
-              Pineapples
-            </div>
+            <div class="card-title">Pineapples</div>
             <div class="card-body">
               <i class="icofont-10x icofont-pineapple"></i>
               <form>
@@ -100,29 +90,27 @@
                   <div class="cell">
                     <label>Price:</label>
                   </div>
-                  <div class="cell">
-                    $1.62
-                  </div>
+                  <div class="cell">$1.62</div>
                 </div>
                 <div class="row">
                   <div class="cell">
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model="inventory.pineapples">
+                    <input type="number" v-model="inventory.pineapples" />
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light">Add to cart</button>
+              <button @click="addToCart('pineapples')" class="btn btn-light">
+                Add to cart
+              </button>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-title">
-              Cherries
-            </div>
+            <div class="card-title">Cherries</div>
             <div class="card-body">
               <i class="icofont-10x icofont-cherry"></i>
               <form>
@@ -138,60 +126,161 @@
                   <div class="cell">
                     <label>Price:</label>
                   </div>
-                  <div class="cell">
-                    $1.04
-                  </div>
+                  <div class="cell">$1.04</div>
                 </div>
                 <div class="row">
                   <div class="cell">
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model="inventory.cherries">
+                    <input type="number" v-model="inventory.cherries" />
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light">Add to cart</button>
+              <button @click="addToCart('pineapples')" class="btn btn-light">
+                Add to cart
+              </button>
             </div>
           </div>
-
         </div>
-
       </main>
+      <!-- Use v-bind to attach the toggle method to the close button -->
+      <sidebar
+        v-if="showSidebar"
+        :toggle="toggleSidebar"
+        :cart="cart"
+        :price="price"
+      />
 
-      <footer>
-      </footer>
-
+      <footer></footer>
     </div>
-      
+
     <script src="https://unpkg.com/vue@next"></script>
     <script>
       let app = Vue.createApp({
         data() {
           return {
+            showSidebar: false,
+            // inventory ammount will change on event
             inventory: {
               carrots: 0,
               pineapples: 0,
-              cherries: 0
+              cherries: 0,
             },
             cart: {
               carrots: 0,
               pineapples: 0,
-              cherries: 0
-            }
-          }
+              cherries: 0,
+            },
+            price: {
+              carrots: 4.82,
+              pineapples: 1.62,
+              cherries: 1.04,
+            },
+          };
         },
         methods: {
           addToCart(type) {
-            this.cart[type] += this.inventory[type]
-            console.log(this.cart)
-          }
-        }
-      })
+            // receive type and number of items
+            this.cart[type] += this.inventory[type];
+            console.log(this.cart);
+          },
+          toggleSidebar() {
+            this.showSidebar = !this.showSidebar;
+          },
+        },
+      });
 
-      app.mount('#app')
+      // Making a custom component that is reusable by app.component() declaration
+      /* Escape the dollar sign so that Vue can interpret it as a normal symbol */
+      app.component("sidebar", {
+        props: ["toggle", "cart", "price"],
+        computed: {
+          cartTotal() {
+            return (
+              this.cart.carrots * this.price.carrots +
+              this.cart.pineapples * this.price.pineapples +
+              this.cart.cherries * this.price.cherries
+            ).toFixed(2);
+          },
+        },
+        template: `
+            <aside class="cart-container">
+              <div class="cart">
+                <h1 class="cart-title spread">
+                  <span>
+                    Cart
+                    <i class="icofont-cart-alt icofont-1x"></i>
+                  </span>
+                  <button @click="toggle" class="cart-close">&times;</button>
+                </h1>
+
+                <div class="cart-body">
+                  <table class="cart-table">
+                    <thead>
+                      <tr>
+                        <th><span class="sr-only">Product Image</span></th>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Total</th>
+                        <th><span class="sr-only">Actions</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><i class="icofont-carrot icofont-3x"></i></td>
+                        <td>Carrot(s)</td>
+                        <td>$1.00</td>
+                        <td class="center">{{ cart.carrots }}</td>
+                        <td>\${{ cart.carrots * price.carrots }}</td>
+                        <td class="center">
+                          <button class="btn btn-light cart-remove">
+                            &times;
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><i class="icofont-carrot icofont-3x"></i></td>
+                        <td>Pineapple(s)</td>
+                        <td>$1.00</td>
+                        <td class="center">{{ cart.pineapples }}</td>
+                        <td>\${{ cart.pineapples * price.pineapples }}</td>
+                        <td class="center">
+                          <button class="btn btn-light cart-remove">
+                            &times;
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><i class="icofont-carrot icofont-3x"></i></td>
+                        <td>Cherries</td>
+                        <td>$1.00</td>
+                        <td class="center">{{ cart.cherries }}</td>
+                        <td>\${{ cart.cherries * price.cherries }}</td>
+                        <td class="center">
+                          <button class="btn btn-light cart-remove">
+                            &times;
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <p class="center"><em>No items in cart</em></p>
+                  <div class="spread">
+                    <span><strong>Total:</strong> \${{ cartTotal }}</span>
+                    <button class="btn btn-light">Checkout</button>
+                  </div>
+                </div>
+              </div>
+            </aside>
+        `,
+      });
+
+      app.mount("#app");
     </script>
   </body>
 </html>
