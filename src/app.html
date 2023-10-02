@@ -41,7 +41,7 @@
 
         <div class="recommended">
 
-          <div v-for="product in inventory.slice(0, 3)" class="card">
+          <div v-cloak v-for="(product, i) in inventory.slice(0, 3)" :key="product.id" class="card">
             <div class="card-title">
               {{ product.name}}
             </div>
@@ -69,13 +69,13 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model.number="inventory.carrots">
+                    <input type="number" v-model.number="product.quantity">
                   </div>
                 </div>
               </form>
             </div>
             <div class="card-footer">
-              <button @click="addToCart('carrots')" class="btn btn-light">
+              <button @click="addToCart(product.name, i)" class="btn btn-light">
                 Add to cart
               </button>
             </div>
@@ -89,6 +89,7 @@
       v-if="showSidebar" 
       :toggle="toggleSidebar"
       :cart="cart" 
+      :inventory="inventory"
       />
 
       <footer>
@@ -103,17 +104,13 @@
           return {
             showSidebar: false,
             inventory: [],
-            cart: {
-              carrots: 0,
-              pineapples: 0,
-              cherries: 0
-            }
+            cart: {}
           }
         },
         methods: {
-          addToCart(type) {
-            this.cart[type] += this.inventory[type]
-            console.log(this.cart)
+          addToCart(name, index) {
+            if (!this.cart[name]) this.cart[name] = 0
+            this.cart[name] += this.inventory[index].quantity
           },
           toggleSidebar() {
             this.showSidebar = !this.showSidebar
@@ -127,10 +124,30 @@
       })
 
       app.component('sidebar', {
-        props: ['toggle','cart'],
+        props: ['toggle', 'cart', 'inventory'],
         computed: {
+        },
+        methods: {
+          //This method will get the price from food.json
+          getPrice(name){
+            const product = this.inventory.find((p) => {
+              return p.name === name
+            })
+            return product.price.USD
+          },
+          
+          // This method will calculate the total of the price by:
+          // 1. Scraping the names of items in cart
+          // 2. Scraping the amount of items in cart that already tagged by key/name and
+          //    Multiplying the amount of items in cart (curr) with getPrice() func 
+          //    alongside with the key (names) as an index
+          // 4. Return the total
           cartTotal(){
-            return (this.cart.carrots * 4.82).toFixed(2)
+            const names = Object.keys(this.cart)
+            const total = Object.values(this.cart).reduce((acc, curr, index) => {
+              return acc + (curr * this.getPrice(names[index]))
+            })
+            return total
           }
         },
         template:`
@@ -157,12 +174,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    <tr v-for="(quantity, key, i) in cart" :key="i">
                       <td><i class="icofont-carrot icofont-3x"></i></td>
-                      <td>Carrot</td>
-                      <td>$4.82</td>
-                      <td class="center">{{ cart.carrots }}</td>
-                      <td>\${{ cart.carrots * 4.82}}</td>
+                      <td>{{ key }}</td>
+                      <td>\${{ getPrice(key) }}</td>
+                      <td class="center">{{ quantity }}</td>
+                      <td>\${{ getPrice(key) * quantity }}</td>
                       <td class="center">
                         <button class="btn btn-light cart-remove">
                           &times;
